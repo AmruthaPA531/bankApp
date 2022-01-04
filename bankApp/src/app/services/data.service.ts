@@ -4,6 +4,9 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class DataService {
+
+
+  currentUserName:any
   users:any={//:any for defining its type
     1000:{acno:1000,uname:"ann",password:"1000",balance:5000},
     1001:{acno:1001,uname:"anu",password:"1001",balance:5000},
@@ -25,7 +28,7 @@ export class DataService {
     password,
     balance:0
     }
-    // console.log(db);
+    console.log(db);
     
     return true
    
@@ -38,6 +41,7 @@ export class DataService {
     if(acno in database){
 
       if(password==database[acno]["password"]){
+        this.currentUserName=database[acno]["uname"]
         return true
      
       }
