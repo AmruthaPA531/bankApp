@@ -34,15 +34,31 @@ register(){
 var uname=this.registerForm.value.uname
 var acno=this.registerForm.value.acno
 var pswd=this.registerForm.value.pswd
-let result=this.ds.register(acno,pswd,uname)
-  
-if(result){
-  alert("account registered successfully")
-this.router.navigateByUrl("")
-}
-  else{
-    alert("account already exist")
-  }
+
+//asynchronous call
+this.ds.register(acno,pswd,uname)
+  .subscribe((result:any)=>{
+    if(result){
+      alert(result.message)
+    this.router.navigateByUrl("")
+    }
+    
+    },
+    (result)=>{
+      alert(result.error.message) 
+    
+    // else{
+      //   alert("account already exist")
+      // }
+  })
+
+// if(result){
+//   alert("account registered successfully")
+// this.router.navigateByUrl("")
+// }
+//   else{
+//     alert("account already exist")
+//   }
 }
 else{
   alert("invalid form")

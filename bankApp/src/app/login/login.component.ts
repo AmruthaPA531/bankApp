@@ -34,17 +34,33 @@ loginForm=this.fb.group({
     var acno=this.loginForm.value.acno
     var password=this.loginForm.value.pswd
 
-    if(this.loginForm){
+    if(this.loginForm.valid){
+      //asynchronous call
+this.ds.login(acno,password)
+.subscribe((result:any)=>{
+  if(result){
+    alert(result.message)
+    localStorage.setItem("curAcno",JSON.stringify(result.curAcno))
+    localStorage.setItem("currentUserName",JSON.stringify(result.currentUserName))
+    localStorage.setItem("token",JSON.stringify(result.token))
+  this.router.navigateByUrl('dashboard')
+  }
+  
+  },
+  (result)=>{
+    alert(result.error.message) 
+ 
+})
                 
-   let result=this.ds.login(acno,password)
-   if(result){
-    alert("login successful")
-    this.router.navigateByUrl('dashboard')
-   }
+  //  let result=this.ds.login(acno,password)
+  //  if(result){
+  //   alert("login successful")
+  //   this.router.navigateByUrl('dashboard')
+  //  }
     }
     
  else{
-  //  alert("failed")
+   alert("failed")
  }
   }
 }
